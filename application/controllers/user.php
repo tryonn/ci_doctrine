@@ -75,9 +75,11 @@ class User extends CI_Controller{
     
     public function allData()
     {
-        $query = new Doctrine_Query()::;
+        $query = new Doctrine_Query();
         $query->from('user u');
         $query->orderby('u.id DESC');
+        
+        print_r($query); die;
         return $query->execute();
     }
 }
