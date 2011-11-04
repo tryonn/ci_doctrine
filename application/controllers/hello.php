@@ -1,4 +1,4 @@
-<?php
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 /**
  * @property CI_Loader $load
  *  
@@ -26,6 +26,7 @@ class Hello extends CI_Controller{
         $this->load->library('doctrine');
         //carrego o entity manager como uma propriedade do controlador
         $this->em = $this->doctrine->em;
+        $this->load->view('submit_sucess');
     }
     public function world(){
         echo "Hello CodeIgniter";
