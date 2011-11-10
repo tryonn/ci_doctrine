@@ -16,6 +16,9 @@
  *
  * @author simao
  */
+//namespace Doctrine\ORM;
+use Doctrine\ORM\QueryBuilder;//
+
 class User extends CI_Controller{
     //put your code here
     private $em; //Entity manager do Doctrine 2
@@ -73,14 +76,18 @@ class User extends CI_Controller{
         echo "Usuario salvo com o id: " . $u->getId() . "<br>user" . $u->getUsername();
     }
     
-    public function allData()
+    public function get_lista_user()
     {
-        $query = new Doctrine_Query();
-        $query->from('user u');
-        $query->orderby('u.id DESC');
+        $qb = new QueryBuilder($this->em);
+        $qb->select('u')
+           ->from('models\User', 'u')
+           ->orderBy('u.username', 'ASC');        
+        $q = $qb->getQuery();        
+        $users = $q->execute();
+        echo '<pre>';
+        $x = var_dump($users);
         
-        print_r($query); die;
-        return $query->execute();
+        return $x;
     }
 }
 
