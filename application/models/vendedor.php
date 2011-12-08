@@ -1,10 +1,12 @@
 <?php
+
 namespace models;
 /**
  * @Entity
- * @Table(name="user")
+ * @Table(name="vendedor")
  */
-class User{
+
+class Vendedor {
     /**
      * @Id
      * @Column(name="id")
@@ -12,21 +14,20 @@ class User{
      */
     protected $id;
     
-    /**
-     * @Column(name="username", unique=true)
+    /*
+     * @Column(name="nome")
      */
-    protected $username;
+    protected $nome;
     
-    /**
-     * @Column(name="password")
-     */
-    protected $password;
-        
-    /**
+     /*
      * @Column(name="email")
      */
     protected $email;
     
+     /*
+     * @Column(name="matricula")
+     */
+    protected $matricula;
     
     public function getId() {
         return $this->id;
@@ -36,22 +37,14 @@ class User{
         $this->id = $id;
     }
 
-    public function getUsername() {
-        return $this->username;
+    public function getNome() {
+        return $this->nome;
     }
 
-    public function setUsername($username) {
-        $this->username = $username;
+    public function setNome($nome) {
+        $this->nome = $nome;
     }
 
-    public function getPassword() {
-        return $this->password;
-    }
-
-    public function setPassword($password) {
-        $this->password = $password;
-    }
-    
     public function getEmail() {
         return $this->email;
     }
@@ -60,6 +53,14 @@ class User{
         $this->email = $email;
     }
 
+    public function getMatricula() {
+        return $this->matricula;
+    }
+
+    public function setMatricula($matricula) {
+        $this->matricula = $matricula;
+    }
+    
 }
 
 ?>

@@ -33,7 +33,7 @@ class User extends CI_Controller{
     }
     
     public function index(){
-        $this->load->view('form_user');
+        $this->load->view('user/form_user');
     }
     
     public function submit(){
@@ -41,9 +41,12 @@ class User extends CI_Controller{
             $this->index();
             return;
         }
-        $this->insert();
-        
-        $this->load->view('submit_sucess');
+        $dao = new \models\user_dao;
+        $u = $dao->insert();
+        $this->em->persist($u);
+        $this->em->flush();
+        $l['user'] = $this->lista_user();
+        $this->load->view('user/lista_user', $l);
     }
     
     public function _submit_validate(){
@@ -63,20 +66,7 @@ class User extends CI_Controller{
         return $this->form_validation->run();
     }
     
-     public function insert(){
-        
-        $u = new models\User;
-        $u->setUsername($this->input->post('username'));
-        $u->setPassword($this->input->post('password'));
-        $u->setEmail($this->input->post('email'));
-        
-        $this->em->persist($u);
-        $this->em->flush();
-        
-        echo "Usuario salvo com o id: " . $u->getId() . "<br>user" . $u->getUsername();
-    }
-    
-    public function get_lista_user()
+    public function lista_user()
     {
         $qb = new QueryBuilder($this->em);
         $qb->select('u')
@@ -84,10 +74,9 @@ class User extends CI_Controller{
            ->orderBy('u.username', 'ASC');        
         $q = $qb->getQuery();        
         $users = $q->execute();
-        echo '<pre>';
-        $x = var_dump($users);
-        
-        return $x;
+//        echo '<pre>';
+//        $x = var_dump($users);
+        return $users;
     }
 }
 

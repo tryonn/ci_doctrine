@@ -6,8 +6,12 @@ and open the template in the editor.
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title></title>
+        <title>simao - neto</title>
     </head>
     <body>
+        <h1>dados da lista</h1>
+        <?php
+            echo "simao menezes";
+        ?>
     </body>
 </html>

@@ -38,6 +38,7 @@ class CI_Loader {
 	protected $_ci_cached_vars		= array();
 	protected $_ci_classes			= array();
 	protected $_ci_loaded_files		= array();
+	protected $_ci_facades                  = array(); //Facade pattern added to the CI
 	protected $_ci_models			= array();
 	protected $_ci_helpers			= array();
 	protected $_ci_varmap			= array('unit_test' => 'unit', 
@@ -233,7 +234,75 @@ class CI_Loader {
 	}
 
 	// --------------------------------------------------------------------
+        function facade($facade, $name = '')
+        {
+            if (is_array($facade))
+            {
+                foreach($facade as $babe)
+                {
+                    $this->facade($babe);
+                }
+                return;
+            }
 
+            if ($facade == '')
+            {
+                return;
+            }
+
+            // Is the facade in a sub-folder? If so, parse out the filename and path.
+            if (strpos($facade, '/') === FALSE)
+            {
+                $path = '';
+            }
+            else
+            {
+                $x = explode('/', $facade);
+                $facade = end($x);
+                unset($x[count($x)-1]);
+                $path = implode('/', $x).'/';
+            }
+
+            if ($name == '')
+            {
+                $name = strtolower(str_replace('_', '', $facade));
+            }
+
+            if (in_array($name, $this->_ci_facades, TRUE))
+            {
+                return;
+            }
+
+            $CI =& get_instance();
+            if (isset($CI->$name))
+            {
+                show_error('The facade name you are loading is the name of a resource that is already being used: '.$name);
+            }
+
+            $facade = strtolower($facade);
+
+            if ( ! file_exists(APPPATH . 'facades/'. $path . $facade . EXT))
+            {
+                show_error('Unable to locate the facade you have specified: '.$facade);
+            }
+
+            if ( ! class_exists('Facade'))
+            {
+                load_class('Facade', FALSE);
+            }
+
+            require_once(APPPATH . 'facades/'.$path.$facade.EXT);
+
+            $facade = ucfirst(str_replace('_', '', $facade));
+
+            $CI->$name = new $facade();
+            $CI->$name->_assign_libraries();
+
+            $this->_ci_facades[] = $name;
+        }
+        // --------------------------------------------------------------------
+        
+        
 	/**
 	 * Database Loader
 	 *

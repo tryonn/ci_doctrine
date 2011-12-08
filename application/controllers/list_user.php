@@ -21,7 +21,7 @@ class list_user extends CI_Controller{
     }
     
     public function index(){
-        $this->load->view('user/lista_user');
+        $this->load->view('submit_sucess');
     }
 }
 

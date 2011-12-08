@@ -7,24 +7,22 @@ and open the template in the editor.
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title></title>
-        <link rel="stylesheet" href="<?php echo base_url(); ?>css/global.css" type="text/css" media="all">
+        <link rel="stylesheet" href="<?php echo base_url(); ?>css/global0.css" type="text/css" media="all">
     </head>
     <body>
-        <h1 style="color: red">Simao</h1> 
-        
-        
-        
-        <?php
-        
-            $user = User::get_instance();
-            
-            $user->get_lista_user();
-            
-            var_dump($user);
-
-        
-        ?>
-        
-        
+        <table border="1">
+            <tr>
+                <th>Nome</th>
+                <th>Email</th>
+                <th>Senha</th>                
+            </tr>
+            <?php foreach ($user as $value):?>
+            <tr>
+                <td><?php echo $value->getUsername();?></td>
+                <td><?php echo $value->getEmail();?></td>
+                <td><?php echo $value->getPassword();?></td>
+            </tr>
+            <?php endforeach; ?>
+        </table>
     </body>
 </html>
