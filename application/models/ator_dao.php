@@ -16,16 +16,14 @@
  * @author simao-ana-sara
  */
 namespace models;
-class vendedor_dao extends \CI_Controller{
+class ator_dao extends \CI_Controller{
     //put your code here
     
     public function insert(){
 
-        $v = new \models\Vendedor;
-        $v->setNome($this->input->post('nome'));
-        $v->setEmail($this->input->post('email'));
-        $v->setMatricula($this->input->post('matricula'));
-        return $v;
+        $a = new \models\Ator;
+        $a->setAtor($this->input->post('ator'));
+        return $a;
     }
 }
 
